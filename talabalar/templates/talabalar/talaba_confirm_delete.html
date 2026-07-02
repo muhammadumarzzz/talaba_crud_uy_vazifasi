@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}O'chirishni tasdiqlash{% endblock %}
+
+{% block content %}
+    <h1>Talabani o'chirish</h1>
+
+    <p>
+        Haqiqatan ham
+        <strong>{{ object.ism }} {{ object.familiya }}</strong>
+        ni o'chirmoqchimisiz?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Ha, o'chirmoqchiman</button>
+        <button type="submit">Bekor qilish</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Talabalar boshqaruvi{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:40px;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo{
+    font-size:28px;
+    color:white;
+    font-weight:700;
+}
+
+.menu{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:10px;
+    transition:.3s;
+    font-weight:500;
+}
+
+nav a:hover{
+    background:#00c6ff;
+    color:white;
+    transform:translateY(-2px);
+}
+
+.username{
+    color:#fff;
+    font-weight:600;
+    margin-right:10px;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#ff4b2b;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+button:hover{
+    background:#ff2d55;
+    transform:scale(1.05);
+}
+
+hr{
+    margin:25px 0;
+    border:none;
+    height:1px;
+    background:rgba(255,255,255,.2);
+}
+
+.messages{
+    list-style:none;
+    margin-bottom:20px;
+}
+
+.messages li{
+    background:#16a34a;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:10px;
+    animation:show .5s;
+}
+
+@keyframes show{
+    from{
+        opacity:0;
+        transform:translateY(-15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:15px;
+}
+
+th{
+    background:#00b4db;
+    color:white;
+    padding:15px;
+}
+
+td{
+    background:rgba(255,255,255,.05);
+    color:white;
+    padding:15px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+tr:hover td{
+    background:rgba(255,255,255,.1);
+}
+
+.btn{
+    display:inline-block;
+    text-decoration:none;
+    padding:9px 18px;
+    border-radius:8px;
+    color:white;
+    transition:.3s;
+    font-weight:600;
+}
+
+.btn-add{
+    background:#22c55e;
+}
+
+.btn-add:hover{
+    background:#16a34a;
+}
+
+.btn-edit{
+    background:#f59e0b;
+}
+
+.btn-edit:hover{
+    background:#d97706;
+}
+
+.btn-delete{
+    background:#ef4444;
+}
+
+.btn-delete:hover{
+    background:#dc2626;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:18px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:rgba(255,255,255,.1);
+    color:white;
+}
+
+input::placeholder{
+    color:#ddd;
+}
+
+label{
+    color:white;
+    font-weight:600;
+}
+
+h1,h2,h3,h4,h5{
+    color:white;
+    margin-bottom:20px;
+}
+
+p{
+    color:#ddd;
+}
+
+@media(max-width:700px){
+
+nav{
+    flex-direction:column;
+    gap:20px;
+}
+
+.menu{
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+body{
+    padding:15px;
+}
+
+.container{
+    padding:20px;
+}
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<nav>
+
+<div class="logo">
+🎓 Talabalar
+</div>
+
+<div class="menu">
+
+<a href="{% url 'royxat' %}">🏠 Bosh sahifa</a>
+
+{% if user.is_authenticated %}
+
+<span class="username">
+👤 {{ user.username }}
+</span>
+
+<form method="post" action="{% url 'logout' %}" style="display:inline;">
+{% csrf_token %}
+<button type="submit">🚪 Chiqish</button>
+</form>
+
+{% else %}
+
+<a href="{% url 'login' %}">🔑 Kirish</a>
+
+<a href="{% url 'register' %}">📝 Ro'yxatdan o'tish</a>
+
+{% endif %}
+
+</div>
+
+</nav>
+
+<hr>
+
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% block content %}
+{% endblock %}
+
+</div>
+
+</body>
+</html>

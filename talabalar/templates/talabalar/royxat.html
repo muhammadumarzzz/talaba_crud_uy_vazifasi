@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Talabalar ro'yxati{% endblock %}
+
+{% block content %}
+    <h1>Talabalar ro'yxati</h1>
+
+    <p>
+        <a class="btn btn-add" href="{% url 'create' %}">
+            + Yangi talaba
+        </a>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ism</th>
+                <th>Familiya</th>
+                <th>Guruh</th>
+                <th>Yosh</th>
+                <th>Faol</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for talaba in talabalar %}
+            <tr>
+                <td>{{ talaba.ism }}</td>
+                <td>{{ talaba.familiya }}</td>
+                <td>{{ talaba.guruh }}</td>
+                <td>{{ talaba.yosh }}</td>
+                <td>{{ talaba.faol }}</td>
+                <td>
+                    <a class="btn btn-edit"
+                       href="{% url 'update' talaba.pk %}">
+                        Tahrirlash
+                    </a>
+
+                    <a class="btn btn-delete"
+                       href="{% url 'delete' talaba.pk %}">
+                        O'chirish
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Talabalar mavjud emas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+    {% for talaba in talabalar %}
+        <li>{{ talaba.title }}</li>
+    {% endfor %}
+    </ul>
+
+    <nav>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">⬅</a>
+    {% endif %}
+
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">➡</a>
+    {% endif %}
+    </nav>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Talabani tahrirlash{% else %}Yangi talaba{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% if object %}Talabani tahrirlash{% else %}Yangi talaba qo'shish{% endif %}</h1>
+
+    <!--
+        Bu shablon TAYYOR — TalabaCreate va TalabaUpdate ikkisi ham shu
+        bitta faylni ishlatadi (vazifa shartiga ko'ra). 'object' bo'sh
+        bo'lsa — yangi qo'shish, to'liq bo'lsa — tahrirlash ekanini
+        bildiradi (Django avtomatik shunday beradi, qo'shimcha kod
+        yozish shart emas).
+    -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Saqlash</button>
+        <a href="{% url 'royxat' %}">Bekor qilish</a>
+    </form>
+{% endblock %}
